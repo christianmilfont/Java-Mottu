@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Motos</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<h1>Lista de Motos</h1>
+
+<a th:href="@{/motos/new}">Adicionar Nova Moto</a>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Ano</th>
+        <th>Cor</th>
+        <th>Cilindrada</th>
+        <th>Status</th>
+        <th>Posição</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="moto : ${motos}">
+        <td th:text="${moto.id}"></td>
+        <td th:text="${moto.marca}"></td>
+        <td th:text="${moto.modelo}"></td>
+        <td th:text="${moto.ano}"></td>
+        <td th:text="${moto.cor}"></td>
+        <td th:text="${moto.cilindrada}"></td>
+        <td th:text="${moto.status}"></td>
+        <td th:text="${moto.posicao}"></td>
+        <td th:text="${moto.latitude}"></td>
+        <td th:text="${moto.longitude}"></td>
+        <td>
+            <a th:href="@{'/motos/edit/' + ${moto.id}}">Editar</a> |
+            <a th:href="@{'/motos/delete/' + ${moto.id}}"
+               onclick="return confirm('Deseja realmente deletar esta moto?');">Deletar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/logout}">Sair</a>
+
+</body>
+</html>

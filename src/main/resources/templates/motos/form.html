@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulário Moto</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<h1 th:text="${motoDTO.id != null} ? 'Editar Moto' : 'Nova Moto'"></h1>
+
+<form th:action="@{/motos/save}" th:object="${motoDTO}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+
+    <label>Marca:</label>
+    <input type="text" th:field="*{marca}" required/><br/>
+
+    <label>Modelo:</label>
+    <input type="text" th:field="*{modelo}" required/><br/>
+
+    <label>Ano:</label>
+    <input type="number" th:field="*{ano}" required/><br/>
+
+    <label>Cor:</label>
+    <input type="text" th:field="*{cor}"/><br/>
+
+    <label>Cilindrada:</label>
+    <input type="number" th:field="*{cilindrada}"/><br/>
+
+    <label>Status:</label>
+    <input type="text" th:field="*{status}"/><br/>
+
+    <label>Posição:</label>
+    <select th:field="*{posicao}">
+        <option th:value="FRONT">Front (cliente trouxe)</option>
+        <option th:value="BACK">Back (empresa trouxe)</option>
+    </select><br/>
+
+    <label>Latitude:</label>
+    <input type="number" step="0.000001" th:field="*{latitude}" required/><br/>
+
+    <label>Longitude:</label>
+    <input type="number" step="0.000001" th:field="*{longitude}" required/><br/><br/>
+
+    <button type="submit">Salvar</button>
+</form>
+
+<a th:href="@{/motos}">Voltar</a>
+
+</body>
+</html>
