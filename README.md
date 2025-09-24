@@ -158,3 +158,64 @@ A URL foi alterada para db:3306, onde db é o nome do serviço MySQL no docker-c
 Outras configurações:
 
 O restante das configurações está OK para o seu cenário, especialmente a configuração do Flyway para migrações de banco de dados e as propriedades do JPA/Hibernate.
+
+# Passo a Passo para Implementação no Azure
+
+Agora que a aplicação está funcionando localmente, podemos enviá-la para o Azure Container Registry (ACR) e rodá-la no Azure Container Instances (ACI).
+
+### 3.1. Criar um Azure Container Registry (ACR)
+
+Faça login no Azure CLI:
+```
+az login
+
+```
+Crie um Azure Container Registry (ACR):
+```
+az acr create --resource-group seu-grupo-de-recursos --name seu-registro --sku Basic
+```
+
+seu-grupo-de-recursos: O nome do grupo de recursos no Azure.
+
+seu-registro: O nome único do seu Azure Container Registry.
+
+### 3.2. Fazer Login no ACR
+
+Faça login no seu ACR:
+```
+az acr login --name seu-registro
+```
+### 3.3. Taguear e Subir a Imagem Docker para o ACR
+
+Tagueie a imagem Docker com o nome do seu ACR:
+```
+docker tag myapp:latest seu-registro.azurecr.io/myapp:latest
+```
+
+Agora envie a imagem para o ACR:
+```
+docker push seu-registro.azurecr.io/myapp:latest
+```
+### 3.4. Rodar a Imagem no Azure Container Instances (ACI)
+
+Depois de subir a imagem para o ACR, é hora de rodar a aplicação no Azure Container Instances (ACI).
+
+Crie o container no ACI:
+```
+az container create --resource-group seu-grupo-de-recursos --name myapp-container --image seu-registro.azurecr.io/myapp:latest --cpu 1 --memory 1.5Gi --registry-login-server seu-registro.azurecr.io --registry-username <acr-username> --registry-password <acr-password> --ports 8080
+```
+
+- seu-grupo-de-recursos: O nome do seu grupo de recursos.
+
+- myapp-container: Nome do container a ser criado.
+
+- 8080: Porta que a aplicação Spring Boot estará escutando.
+
+### 3.5. Verificar se o Container Está Rodando no ACI
+
+Verifique o status do seu container no ACI:
+```
+az container show --resource-group seu-grupo-de-recursos --name myapp-container
+```
+
+### A aplicação estará acessível via o IP público atribuído ao container ACI.
