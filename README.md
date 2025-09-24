@@ -122,9 +122,30 @@ Antes de rodar a aplicação, é necessário ter o **Docker** e o **Docker Compo
 1. **Clone o Repositório**:
 
    ```bash
-   git clone https://github.com/seu-usuario/projeto-devops.git
-   cd projeto-devops
+       git clone https://github.com/seu-usuario/projeto-devops.git
+       cd projeto-devops
+   ```
+## Construir a Imagem da Aplicação:
+    ```bash
+       docker build -t myapp .
+    ```
+## Subir os Containers com Docker Compose:
+    ```bash
+        docker-compose up -d
+    ```
 
+## Testes:
+Exemplo de POST (inserir um usuário):   
+    ```bash
+        curl -X POST http://localhost:8080/api/users \
+          -H "Content-Type: application/json" \
+          -d '{"name": "John", "email": "john@example.com"}'
+    ```
+## Verificar os Containers em Execução e parar:
+    ```bash
+        docker ps
+        docker-compose down
+    ```
 Explicação das mudanças:
 
 URL de conexão:
