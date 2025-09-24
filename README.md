@@ -54,26 +54,24 @@ garantir que só o ADMIN veja os links de edição e deleção, usei no template
 </td>
 
 ````
-# Projeto DevOps - Implementação de Aplicação Java Spring com Docker e MySQL na Nuvem
+# Projeto DevOps - Implementação de Aplicação Java Spring com Docker, MySQL e Azure
 
 ## Descrição do Projeto
 
-Este projeto tem como objetivo implementar uma aplicação Java Spring Boot com o banco de dados MySQL 8.0, utilizando Docker e Docker Compose para containerização e orquestração dos serviços. A aplicação é configurada para rodar na nuvem e se conecta a um banco de dados MySQL em um container Docker. A solução utiliza o Flyway para migrações de banco de dados e é escalável, fácil de manter e de implantar, seguindo as melhores práticas de DevOps e Cloud Computing.
+Este projeto tem como objetivo implementar uma aplicação Java Spring Boot com o banco de dados MySQL 8.0, utilizando Docker e Docker Compose para containerização e orquestração dos serviços. A aplicação será configurada para rodar na nuvem, usando o **Azure Container Instances (ACI)** para execução do container da aplicação e **Azure Container Registry (ACR)** para armazenar a imagem Docker da aplicação.
 
 ## Arquitetura da Solução
 
-A arquitetura do sistema é baseada em containers, o que traz flexibilidade, escalabilidade e facilidade de manutenção. A solução é composta por dois principais containers:
+A arquitetura da solução é composta por dois componentes principais:
 
 1. **Aplicação Java Spring Boot**:
-   - Desenvolvida em **Java 21** com **Spring Boot**, a aplicação oferece uma API RESTful para interação com o sistema.
-   - A aplicação é empacotada em um container Docker, permitindo que seja executada em qualquer ambiente de forma padronizada.
-   - O Spring Boot é configurado para conectar-se a um banco de dados MySQL rodando em outro container.
+   - A aplicação Java Spring Boot será empacotada em um container Docker.
+   - Ela se conecta a um banco de dados MySQL rodando em um container separado (no local ou na nuvem).
 
 2. **Banco de Dados MySQL 8.0**:
-   - O banco de dados é executado em um container separado usando a imagem oficial do **MySQL 8.0**.
-   - O banco de dados é inicializado com o schema definido pelo Flyway, garantindo que a estrutura do banco seja gerenciada de forma consistente entre os diferentes ambientes.
+   - O banco de dados MySQL 8.0 será executado no **Azure Container Instances (ACI)** ou em um serviço PaaS de banco de dados, como o **Azure Database for MySQL**.
 
-A comunicação entre a aplicação e o banco de dados é feita via rede Docker, garantindo que ambos os containers consigam se comunicar de maneira segura e eficiente.
+A solução vai permitir rodar a aplicação na nuvem de forma escalável e de fácil manutenção.
 
 ## Tecnologias Utilizadas
 
@@ -85,38 +83,36 @@ A comunicação entre a aplicação e o banco de dados é feita via rede Docker,
 - **Flyway** (Migrations de banco de dados)
 - **Azure Container Registry (ACR)** (Armazenamento das imagens Docker)
 - **Azure Container Instances (ACI)** (Execução de containers na nuvem)
+
 ## Benefícios para o Negócio
 
-A implementação dessa solução traz diversos benefícios para o negócio:
-
 ### 1. **Escalabilidade**:
-   - A utilização de **Docker** permite que a aplicação seja facilmente escalável. A arquitetura baseada em containers permite aumentar ou reduzir os recursos conforme a demanda, sem a necessidade de reconfigurar a infraestrutura.
-   - Com a configuração do **Docker Compose**, é possível subir múltiplos containers de forma simples para aumentar a disponibilidade da aplicação e do banco de dados.
+   - A aplicação pode ser facilmente escalada para atender a maiores volumes de tráfego. A utilização de ACI permite aumentar a capacidade de execução de containers conforme a demanda.
 
 ### 2. **Portabilidade**:
-   - A aplicação é empacotada em containers, o que garante que ela funcione de maneira consistente em qualquer ambiente, seja no desenvolvimento local, ambientes de testes, ou produção.
-   - Isso reduz problemas de "funciona na minha máquina", pois o código e o ambiente estão isolados dentro do container.
+   - Com o uso de **Docker**, a aplicação pode ser executada em qualquer ambiente de maneira consistente, seja localmente ou em diferentes ambientes de nuvem (neste caso, **Azure**).
 
 ### 3. **Facilidade de Implementação e Manutenção**:
-   - O uso de **Docker Compose** facilita a configuração e o gerenciamento de múltiplos containers (aplicação e banco de dados). A configuração é declarativa e facilita a replicação do ambiente de desenvolvimento para produção.
-   - O **Flyway** controla as migrações do banco de dados, garantindo que todas as alterações de schema sejam aplicadas corretamente e de forma ordenada, evitando problemas de inconsistência entre ambientes.
+   - A implementação e manutenção são simplificadas, pois o uso de **Docker Compose** facilita a configuração e inicialização de múltiplos containers (aplicação e banco de dados).
+   - O **Flyway** automatiza o gerenciamento de migrações de banco de dados.
 
-### 4. **Custo Efetivo**:
-   - Ao utilizar containers, é possível reduzir custos com servidores e infraestrutura, já que os containers consomem menos recursos e são mais eficientes.
-   - A configuração do MySQL em um container torna o gerenciamento do banco de dados mais simples e eficiente.
+### 4. **Integração com Azure**:
+   - A solução pode ser facilmente integrada ao **Azure** para aproveitar sua infraestrutura escalável e resiliente.
+   - **ACR** permite armazenar e versionar as imagens Docker da aplicação.
+   - **ACI** oferece uma maneira simples de rodar containers na nuvem sem a necessidade de gerenciar infraestrutura de servidores.
 
-### 5. **Facilidade de Testes e Deploy**:
-   - Com **Docker**, o processo de deploy é simplificado, já que a imagem Docker contém toda a aplicação e suas dependências.
-   - Além disso, é possível configurar facilmente o pipeline de integração contínua (CI) e deploy contínuo (CD) para automatizar os testes e o deploy em diferentes ambientes.
+### 5. **Custo Efetivo**:
+   - Usar ACI e ACR oferece uma solução econômica, pois você paga apenas pelo tempo de execução dos containers e pela quantidade de armazenamento utilizado no ACR, sem a sobrecarga de gerenciar máquinas virtuais ou servidores.
 
 ## Como Rodar a Aplicação
 
-### Pré-requisitos
+### 1. **Pré-requisitos**
 
-Antes de rodar a aplicação, é necessário ter o **Docker** e o **Docker Compose** instalados no seu sistema.
+Antes de rodar a aplicação, é necessário ter o **Docker**, **Docker Compose** e **Azure CLI** instalados no seu sistema.
 
-1. **Instalar Docker**: [Docker - Instalação](https://docs.docker.com/get-docker/)
-2. **Instalar Docker Compose**: [Docker Compose - Instalação](https://docs.docker.com/compose/install/)
+- **Instalar Docker**: [Docker - Instalação](https://docs.docker.com/get-docker/)
+- **Instalar Docker Compose**: [Docker Compose - Instalação](https://docs.docker.com/compose/install/)
+- **Instalar Azure CLI**: [Azure CLI - Instalação](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
 
 ### Passo a Passo
 
