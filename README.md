@@ -54,3 +54,19 @@ garantir que só o ADMIN veja os links de edição e deleção, usei no template
 </td>
 
 ````
+
+Explicação das mudanças:
+
+URL de conexão:
+````sql
+Antes: jdbc:mysql://localhost:3306/mottu_challenge
+
+Agora: jdbc:mysql://db:3306/mottu_challenge
+
+````
+
+A URL foi alterada para db:3306, onde db é o nome do serviço MySQL no docker-compose.yml. Isso permite que o Spring Boot se conecte ao MySQL dentro do container ao invés de tentar se conectar ao localhost.
+
+Outras configurações:
+
+O restante das configurações está OK para o seu cenário, especialmente a configuração do Flyway para migrações de banco de dados e as propriedades do JPA/Hibernate.
