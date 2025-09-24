@@ -83,7 +83,8 @@ A comunicação entre a aplicação e o banco de dados é feita via rede Docker,
 - **Docker** (Containerização)
 - **Docker Compose** (Orquestração de containers)
 - **Flyway** (Migrations de banco de dados)
-
+- **Azure Container Registry (ACR)** (Armazenamento das imagens Docker)
+- **Azure Container Instances (ACI)** (Execução de containers na nuvem)
 ## Benefícios para o Negócio
 
 A implementação dessa solução traz diversos benefícios para o negócio:
