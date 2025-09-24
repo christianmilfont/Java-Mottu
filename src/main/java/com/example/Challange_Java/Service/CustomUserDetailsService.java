@@ -26,8 +26,10 @@ public class CustomUserDetailsService implements UserDetailsService{
      }
      @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var usuario = userRepo.findByUsername(username)
+         System.out.println("[INFO] Iniciando busca no banco de dados para o usuário: " + username);
+         var usuario = userRepo.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
+         System.out.println("[SUCCESS] Usuário carregado com sucesso do banco: " + usuario.getUsername());
 
         return new User(
                 usuario.getUsername(),

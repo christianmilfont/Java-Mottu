@@ -39,7 +39,7 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/motos", true) //para redirecionar para uma página específica após login
+                        .defaultSuccessUrl("/motos/listagem", true) // redireciona para a página de listagem de motos após login
                         .permitAll()
                 )
                 .logout(logout -> logout.permitAll());

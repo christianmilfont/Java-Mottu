@@ -19,7 +19,7 @@ public class MotoController {
     private MotoRepository motoRepository;
 
     // Listar motos (USER e ADMIN)
-    @GetMapping
+    @GetMapping("/listagem")
     public String listMotos(Model model) {
         model.addAttribute("motos", motoRepository.findAll());
         return "motos/list"; // Thymeleaf template: motos/list.html

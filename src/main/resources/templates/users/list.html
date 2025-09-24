@@ -5,6 +5,15 @@
     <title>Lista de Usuários</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+<!–– fragments/header.html ––>
+<div th:fragment="header">
+    <nav>
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/users}">Usuários</a>
+        <a th:href="@{/logout}">Sair</a>
+    </nav>
+</div>
+
 <body>
 <h1>Lista de Usuários</h1>
 
@@ -36,6 +45,13 @@
 </table>
 
 <a th:href="@{/logout}">Sair</a>
-
+<!–– fragments/footer.html ––>
+<div th:fragment="footer">
+    <footer>
+        <p>&copy; 2025. Todos os direitos reservados.</p>
+    </footer>
+</div>
 </body>
+
+
 </html>
