@@ -44,7 +44,7 @@
     </tbody>
 </table>
 
-<a th:href="@{/logout}">Sair</a>
+<a th:href="@{/logout}" onclick="return confirm('Tem certeza de que deseja sair?');">Sair</a>
 <!–– fragments/footer.html ––>
 <div th:fragment="footer">
     <footer>

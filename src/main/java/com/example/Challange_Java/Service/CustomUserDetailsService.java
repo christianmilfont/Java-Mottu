@@ -31,6 +31,9 @@ public class CustomUserDetailsService implements UserDetailsService{
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
          System.out.println("[SUCCESS] Usuário carregado com sucesso do banco: " + usuario.getUsername());
 
+         // Log da senha e do hash armazenado
+         System.out.println("Senha inserida: admin123");
+         System.out.println("Hash armazenado no banco: " + usuario.getPassword());
         return new User(
                 usuario.getUsername(),
                 usuario.getPassword(),
