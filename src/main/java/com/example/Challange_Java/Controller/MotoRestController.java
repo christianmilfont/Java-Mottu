@@ -30,14 +30,14 @@ public class MotoRestController {
 
     // Criar nova moto (ADMIN)
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public Moto criarMoto(@RequestBody Moto moto) {
         return motoRepository.save(moto);
     }
 
     // Atualizar moto existente (ADMIN)
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public Moto atualizarMoto(@PathVariable Long id, @RequestBody Moto motoAtualizada) {
         Moto moto = motoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Moto não encontrada: " + id));
