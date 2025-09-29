@@ -5,7 +5,7 @@ FROM openjdk:21-jdk-slim
 WORKDIR /app
 
 # Copiar o JAR gerado pelo Maven/Gradle para dentro do container
-COPY target/myapp.jar myapp.jar
+COPY target/Challange-Java-0.0.1-SNAPSHOT.jar myapp.jar
 
 # Expõe a porta 8080, padrão para aplicações Spring Boot
 EXPOSE 8080
