@@ -17,7 +17,7 @@ public class MotoController {
 
     @Autowired
     private MotoRepository motoRepository;
-
+   
     // Listar motos (USER e ADMIN)
     @GetMapping("/listagem")
     public String listMotos(Model model) {
@@ -57,6 +57,7 @@ public class MotoController {
         motoRepository.save(moto);
         return "redirect:/motos";
     }
+
 
     // Formulário de edição
     @GetMapping("/edit/{id}")
