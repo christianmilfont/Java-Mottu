@@ -9,9 +9,7 @@ services:
     depends_on:
       - db  # Garantir que o banco de dados inicie primeiro
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/mottu_challenge
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: senha123
+      SPRING_PROFILES_ACTIVE: docker
     networks:
       - app-network
 
