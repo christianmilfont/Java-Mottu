@@ -50,6 +50,7 @@ public class SecurityConfig {
                         .requestMatchers("/login", "/css/**", "/js/**").permitAll() // permite login e recursos públicos
                         .requestMatchers("/motos/listagem").hasAnyRole("USER", "ADMIN")  // Permite tanto para USER quanto ADMIN
                         .requestMatchers("/api/motos/**").permitAll()  // Permite tanto para USER quanto ADMIN
+                        .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/motos/**").hasRole("ADMIN")
                         .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll() // libera preflight para meu App React
                         .anyRequest().authenticated()

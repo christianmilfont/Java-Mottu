@@ -8,7 +8,7 @@
 <!–– fragments/header.html ––>
 <div th:fragment="header">
     <nav>
-        <a th:href="@{/}">Home</a>
+        <a th:href="@{/motos/listagem}">Home</a>
         <a th:href="@{/users}">Usuários</a>
         <a th:href="@{/logout}">Sair</a>
     </nav>
@@ -24,16 +24,13 @@
     <tr>
         <th>ID</th>
         <th>Username</th>
-        <th>Email</th>
         <th>Role</th>
-        <th>Ações</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="user : ${users}">
         <td th:text="${user.id}"></td>
         <td th:text="${user.username}"></td>
-        <td th:text="${user.email}"></td>
         <td th:text="${user.role}"></td>
         <td>
             <a th:href="@{'/users/edit/' + ${user.id}}">Editar</a> |
