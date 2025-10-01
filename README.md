@@ -164,58 +164,64 @@ O restante das configurações está OK para o seu cenário, especialmente a con
 Agora que a aplicação está funcionando localmente, podemos enviá-la para o Azure Container Registry (ACR) e rodá-la no Azure Container Instances (ACI).
 
 ### 3.1. Criar um Azure Container Registry (ACR)
+Como usar
 
-Faça login no Azure CLI:
-```
-az login
+Salve como deploy_full_aci.sh
 
-```
-Crie um Azure Container Registry (ACR):
-```
-az acr create --resource-group seu-grupo-de-recursos --name seu-registro --sku Basic
-```
+Dê permissão de execução:
 
-seu-grupo-de-recursos: O nome do grupo de recursos no Azure.
+chmod +x deploy_full_aci.sh
 
-seu-registro: O nome único do seu Azure Container Registry.
 
-### 3.2. Fazer Login no ACR
+Execute:
 
-Faça login no seu ACR:
-```
-az acr login --name seu-registro
-```
-### 3.3. Taguear e Subir a Imagem Docker para o ACR
+./deploy_full_aci.sh
 
-Tagueie a imagem Docker com o nome do seu ACR:
-```
-docker tag myapp:latest seu-registro.azurecr.io/myapp:latest
-```
+📄 Resultado da execução
 
-Agora envie a imagem para o ACR:
-```
-docker push seu-registro.azurecr.io/myapp:latest
-```
-### 3.4. Rodar a Imagem no Azure Container Instances (ACI)
+Dois containers rodando no Azure:
 
-Depois de subir a imagem para o ACR, é hora de rodar a aplicação no Azure Container Instances (ACI).
+mottu-db com MySQL
 
-Crie o container no ACI:
-```
-az container create --resource-group seu-grupo-de-recursos --name myapp-container --image seu-registro.azurecr.io/myapp:latest --cpu 1 --memory 1.5Gi --registry-login-server seu-registro.azurecr.io --registry-username <acr-username> --registry-password <acr-password> --ports 8080
-```
+mottu-app com sua aplicação
 
-- seu-grupo-de-recursos: O nome do seu grupo de recursos.
+Ambos se comunicam pela VNET
 
-- myapp-container: Nome do container a ser criado.
+Ao final você verá:
 
-- 8080: Porta que a aplicação Spring Boot estará escutando.
+O IP público da aplicação
 
-### 3.5. Verificar se o Container Está Rodando no ACI
+Os logs da aplicação Java tentando conectar no banco
 
-Verifique o status do seu container no ACI:
-```
-az container show --resource-group seu-grupo-de-recursos --name myapp-container
-```
+✅ Como mostrar na entrega:
 
+Print do IP público da aplicação:
+Copie o que o script te mostrar (ex: http://20.50.44.11:8080) e acesse via navegador
+
+Print dos logs:
+O script já mostra os logs, com saída como:
+
+Connecting to MySQL...
+Connected successfully!
+Executing query...
+
+
+Demonstração em vídeo (opcional):
+Grave com OBS ou use prints organizados em PDF mostrando:
+
+A criação dos recursos no Azure
+
+A URL funcionando
+
+Os logs no terminal
+
+✅ Checklist da entrega final
+Entrega	Feito?
+Aplicação rodando no Azure ACI	✅
+Banco MySQL rodando no Azure ACI	✅
+Ambos conectados via VNET	✅
+Logs da aplicação acessando o banco	✅
+IP público acessível	✅
+Dockerfile funcionando	✅
+Script automatizado deploy_full_aci.sh
 ### A aplicação estará acessível via o IP público atribuído ao container ACI.
