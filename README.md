@@ -11,7 +11,7 @@ Aplicação voltada para criação de motos, para localiza-la em qual parte do p
 - SpringBoot
 - Flaway (Para migrar os dados para o banco, automatizando processos)
 - Thymeleaf (Para denonstrar a aplicação montada de uma maneira mais visual utilizando HTML)
-
+- Spring Security (Para permisionamentos dos acessos de determinadas ações da API, configurei o projeto com os arquivos SecurityConfig e na parte de Services nosso UserDetails para definir nossas Roles)
 ### Comandos essenciais (Utilize os comandos abaixo sobre o banco de dados para conseguir rodar a aplicação sem problemas):
 ```
     git clone https://github.com/christianmilfont/Java-Mottu.git
