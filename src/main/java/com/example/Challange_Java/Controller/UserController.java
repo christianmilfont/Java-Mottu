@@ -44,7 +44,7 @@ public class UserController {
     public String saveUser(@Valid @ModelAttribute("userDTO") UserDTO userDTO,
                            BindingResult result) {
         if (result.hasErrors()) {
-            return "users/form";
+            return "motos/list";
         }
 
         User user = new User();

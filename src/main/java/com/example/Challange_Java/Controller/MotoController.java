@@ -22,7 +22,7 @@ public class MotoController {
     @GetMapping("/listagem")
     public String listMotos(Model model) {
         model.addAttribute("motos", motoRepository.findAll());
-        return "motos/list"; // Thymeleaf template: motos/list.html
+        return "motos/list";
     }
 
     // Formulário para criar nova moto
@@ -55,7 +55,7 @@ public class MotoController {
         moto.setLongitude(motoDTO.getLongitude());
 
         motoRepository.save(moto);
-        return "redirect:/motos";
+        return "redirect:/motos/listagem";
     }
 
 
@@ -87,6 +87,6 @@ public class MotoController {
     @PreAuthorize("hasRole('ADMIN')")
     public String deleteMoto(@PathVariable Long id) {
         motoRepository.deleteById(id);
-        return "redirect:/motos";
+        return "redirect:/motos/listagem";
     }
 }
