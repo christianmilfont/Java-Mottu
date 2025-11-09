@@ -3,13 +3,15 @@
 # ==========================
 FROM eclipse-temurin:21-jdk-jammy AS builder
 
-# Define o diretório de trabalho dentro do container
 WORKDIR /app
 
-# Copia todo o conteúdo do projeto para dentro da imagem
+# Copia o código do projeto para dentro do container
 COPY . .
 
-# Executa o Maven Wrapper para compilar o projeto e gerar o .jar
+# Dá permissão de execução ao Maven Wrapper
+RUN chmod +x mvnw
+
+# Executa o Maven Wrapper para gerar o JAR
 RUN ./mvnw clean package -DskipTests
 
 # ==========================
@@ -17,14 +19,13 @@ RUN ./mvnw clean package -DskipTests
 # ==========================
 FROM eclipse-temurin:21-jdk-jammy
 
-# Define o diretório de trabalho
 WORKDIR /app
 
-# Copia o JAR gerado na etapa de build
+# Copia o JAR gerado da etapa anterior
 COPY --from=builder /app/target/*.jar app.jar
 
 # Expõe a porta padrão do Spring Boot
 EXPOSE 8080
 
-# Comando para executar a aplicação
+# Comando para rodar a aplicação
 ENTRYPOINT ["java", "-jar", "app.jar"]
