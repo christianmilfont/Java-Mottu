@@ -1,1 +1,34 @@
+version: '3.8'
 
+services:
+  # Serviço da aplicação Java
+  app:
+    build: .
+    ports:
+      - "8080:8080"  # Mapeando a porta 8080
+    depends_on:
+      - db  # Garantir que o banco de dados inicie primeiro
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    networks:
+      - app-network
+
+  # Serviço do MySQL 8.0
+  db:
+    image: mysql:8.0  # Usando a imagem oficial do MySQL 8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: senha123
+      MYSQL_DATABASE: mottu_challenge  # Nome do banco de dados
+    ports:
+      - "3307:3306"  # Mapeando a porta 3306 para conexão com o banco
+    volumes:
+      - db_data:/var/lib/mysql  # Persistência de dados do MySQL
+    networks:
+      - app-network
+
+volumes:
+  db_data:  # Volumes para persistência de dados
+
+networks:
+  app-network:
+    driver: bridge
