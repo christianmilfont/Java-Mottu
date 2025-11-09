@@ -1,15 +1,30 @@
+# ==========================
+# Etapa 1 - Build da aplicação
+# ==========================
+FROM eclipse-temurin:21-jdk-jammy AS builder
 
-# Imagem base estável para Java 21
-FROM eclipse-temurin:21-jdk-jammy
-
-# Diretório de trabalho dentro do container
+# Define o diretório de trabalho dentro do container
 WORKDIR /app
 
-# Copiar o JAR gerado pelo Maven/Gradle para dentro do container
-COPY target/Challange-Java-0.0.1-SNAPSHOT.jar myapp.jar
+# Copia todo o conteúdo do projeto para dentro da imagem
+COPY . .
 
-# Expõe a porta 8080, padrão para aplicações Spring Boot
+# Executa o Maven Wrapper para compilar o projeto e gerar o .jar
+RUN ./mvnw clean package -DskipTests
+
+# ==========================
+# Etapa 2 - Runtime
+# ==========================
+FROM eclipse-temurin:21-jdk-jammy
+
+# Define o diretório de trabalho
+WORKDIR /app
+
+# Copia o JAR gerado na etapa de build
+COPY --from=builder /app/target/*.jar app.jar
+
+# Expõe a porta padrão do Spring Boot
 EXPOSE 8080
 
-# Comando para rodar a aplicação Spring Boot
-CMD ["java", "-jar", "myapp.jar"]
+# Comando para executar a aplicação
+ENTRYPOINT ["java", "-jar", "app.jar"]
